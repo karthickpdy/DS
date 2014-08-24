@@ -35,7 +35,7 @@ void add(struct Node **head,int data,int pos)
 	else
 	{
 
-		while(temp && i<pos)
+		while(temp && temp->next && i<pos)
 		{
 			i++;
 			temp = temp->next;
@@ -67,6 +67,36 @@ void append(struct Node **head,int data)
 		valueNode->next=NULL;
 	
 }
+
+void deleteFirst(struct Node **head)
+{
+	if(!(*head) || !(*head)->next)
+		return;
+	struct Node *temp = (*head)->next;
+	(*head)->next=(*head)->next->next;
+	free(temp);
+}
+
+
+void deleteLast(struct Node **head)
+{
+	if(!(*head) || !(*head)->next)
+		return;
+	if(!(*head)->next->next)
+	{
+		deleteFirst(head);
+		return;
+	}
+	struct Node *temp = (*head)->next;
+	while(temp->next && temp->next->next)
+	temp=temp->next;
+
+	struct Node *temp1 = temp->next;
+	temp->next=temp->next->next;
+	free(temp1);
+	
+}
+
 
 void printList(struct Node *head)
 {
